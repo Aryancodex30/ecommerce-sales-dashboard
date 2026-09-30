@@ -1,261 +1,150 @@
-# E-Commerce Database - Data Dictionary
+# E-Commerce Data Dictionary
 
-## Overview
-Complete documentation of all tables, columns, and data types in the e-commerce database schema.
+## suppliers
+| Column | Type | Description |
+|---|---|---|
+| supplier_id | INT | Unique supplier ID |
+| supplier_name | VARCHAR(255) | Supplier company name |
+| contact_person | VARCHAR(255) | Primary contact |
+| email | VARCHAR(255) | Supplier email |
+| phone | VARCHAR(20) | Supplier phone |
+| country | VARCHAR(100) | Country |
+| city | VARCHAR(100) | City |
+| rating | DECIMAL(2,1) | Supplier rating |
+| payment_terms | VARCHAR(100) | Payment conditions |
+| created_date | TIMESTAMP | Record creation date |
+| updated_date | TIMESTAMP | Last update |
 
----
+## products
+| Column | Type | Description |
+|---|---|---|
+| product_id | INT | Unique product ID |
+| product_name | VARCHAR(255) | Product name |
+| category | VARCHAR(100) | Product category |
+| subcategory | VARCHAR(100) | Product subcategory |
+| description | TEXT | Product description |
+| price | DECIMAL(10,2) | Selling price |
+| cost | DECIMAL(10,2) | Cost of goods sold |
+| stock_quantity | INT | Current inventory |
+| reorder_level | INT | Reorder threshold |
+| supplier_id | INT | Supplier reference |
+| sku | VARCHAR(50) | Stock keeping unit |
+| rating | DECIMAL(3,2) | Product rating |
+| review_count | INT | Number of reviews |
+| created_date | TIMESTAMP | Product registration date |
+| updated_date | TIMESTAMP | Last update |
 
-## 1. SUPPLIERS Table
+## customers
+| Column | Type | Description |
+|---|---|---|
+| customer_id | INT | Unique customer ID |
+| customer_name | VARCHAR(255) | Full name |
+| email | VARCHAR(255) | Email address |
+| phone | VARCHAR(20) | Phone number |
+| country | VARCHAR(100) | Country |
+| state | VARCHAR(100) | State or region |
+| city | VARCHAR(100) | City |
+| postal_code | VARCHAR(20) | Postal code |
+| address | TEXT | Customer address |
+| customer_segment | VARCHAR(50) | Segment like Premium or Standard |
+| signup_date | TIMESTAMP | Account creation date |
+| last_purchase_date | DATE | Most recent order date |
+| lifetime_value | DECIMAL(12,2) | Total customer value |
+| total_orders | INT | Total order count |
+| is_active | BOOLEAN | Active buyer flag |
+| updated_date | TIMESTAMP | Last update |
 
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| supplier_id | INT | PK, AUTO_INCREMENT | Unique identifier for supplier |
-| supplier_name | VARCHAR(255) | NOT NULL | Name of supplier company |
-| contact_person | VARCHAR(255) | - | Primary contact person name |
-| email | VARCHAR(255) | - | Supplier email address |
-| phone | VARCHAR(20) | - | Supplier phone number |
-| country | VARCHAR(100) | - | Supplier country location |
-| city | VARCHAR(100) | - | Supplier city location |
-| rating | DECIMAL(2,1) | - | Supplier rating (1-10) |
-| payment_terms | VARCHAR(100) | - | Payment terms (e.g., "Net 30") |
-| created_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Record creation date |
-| updated_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP ON UPDATE | Last update timestamp |
+## orders
+| Column | Type | Description |
+|---|---|---|
+| order_id | INT | Unique order ID |
+| customer_id | INT | Customer reference |
+| order_date | TIMESTAMP | Order date |
+| ship_date | DATE | Shipment date |
+| delivery_date | DATE | Delivery date |
+| total_amount | DECIMAL(12,2) | Final order value |
+| order_subtotal | DECIMAL(12,2) | Before tax and shipping |
+| discount_amount | DECIMAL(10,2) | Discount amount |
+| tax_amount | DECIMAL(10,2) | Tax amount |
+| shipping_cost | DECIMAL(10,2) | Delivery cost |
+| order_status | VARCHAR(50) | Completed, Pending, Returned, etc. |
+| payment_method | VARCHAR(50) | Card, PayPal, etc. |
+| shipping_method | VARCHAR(100) | Shipping provider |
+| shipping_address | TEXT | Delivery address |
+| notes | TEXT | Internal order notes |
+| created_date | TIMESTAMP | Order creation timestamp |
 
----
+## order_items
+| Column | Type | Description |
+|---|---|---|
+| order_item_id | INT | Unique line item ID |
+| order_id | INT | Order reference |
+| product_id | INT | Product reference |
+| quantity | INT | Quantity sold |
+| unit_price | DECIMAL(10,2) | Unit price |
+| discount_percent | DECIMAL(5,2) | Discount on line item |
+| line_total | DECIMAL(12,2) | Total after discounts |
+| created_date | TIMESTAMP | Row creation date |
 
-## 2. PRODUCTS Table
+## returns
+| Column | Type | Description |
+|---|---|---|
+| return_id | INT | Unique return ID |
+| order_id | INT | Related order |
+| order_item_id | INT | Related item |
+| return_date | DATE | Return date |
+| reason | VARCHAR(255) | Return reason |
+| refund_amount | DECIMAL(12,2) | Refund value |
+| return_status | VARCHAR(50) | Accepted or rejected |
+| restocking_fee | DECIMAL(10,2) | Restocking fee |
+| notes | TEXT | Additional notes |
+| created_date | TIMESTAMP | Record creation date |
+| updated_date | TIMESTAMP | Last update |
 
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| product_id | INT | PK, AUTO_INCREMENT | Unique product identifier |
-| product_name | VARCHAR(255) | NOT NULL | Name of the product |
-| category | VARCHAR(100) | NOT NULL | Primary product category |
-| subcategory | VARCHAR(100) | - | Secondary product category |
-| description | TEXT | - | Detailed product description |
-| price | DECIMAL(10,2) | NOT NULL | Selling price |
-| cost | DECIMAL(10,2) | NOT NULL | Cost/COGS |
-| stock_quantity | INT | DEFAULT 0 | Current inventory quantity |
-| reorder_level | INT | DEFAULT 100 | Min quantity before reorder |
-| supplier_id | INT | FK → suppliers | Supplier reference |
-| sku | VARCHAR(50) | UNIQUE | Stock keeping unit |
-| rating | DECIMAL(3,2) | - | Average product rating (0-5) |
-| review_count | INT | DEFAULT 0 | Number of customer reviews |
-| created_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Product creation date |
-| updated_date | TIMESTAMP | AUTO UPDATE | Last update timestamp |
+## payment_transactions
+| Column | Type | Description |
+|---|---|---|
+| transaction_id | INT | Unique payment ID |
+| order_id | INT | Related order |
+| payment_method | VARCHAR(50) | Payment type |
+| amount | DECIMAL(12,2) | Payment amount |
+| transaction_status | VARCHAR(50) | Completed or failed |
+| transaction_date | TIMESTAMP | Payment date |
+| reference_number | VARCHAR(100) | Payment gateway reference |
 
-**Indexes**: category, created_date, category + subcategory
+## inventory_log
+| Column | Type | Description |
+|---|---|---|
+| log_id | INT | Unique inventory log ID |
+| product_id | INT | Product reference |
+| transaction_type | VARCHAR(50) | Purchase, sale, or adjustment |
+| quantity_change | INT | Change in stock |
+| previous_quantity | INT | Stock before update |
+| new_quantity | INT | Stock after update |
+| notes | TEXT | Inventory log notes |
+| created_date | TIMESTAMP | Event date |
 
----
+## customer_reviews
+| Column | Type | Description |
+|---|---|---|
+| review_id | INT | Unique review ID |
+| product_id | INT | Product reference |
+| customer_id | INT | Customer reference |
+| order_id | INT | Related order |
+| rating | INT | 1 to 5 rating |
+| review_text | TEXT | Review content |
+| review_date | TIMESTAMP | Date written |
+| helpful_count | INT | Helpful votes |
 
-## 3. CUSTOMERS Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| customer_id | INT | PK, AUTO_INCREMENT | Unique customer identifier |
-| customer_name | VARCHAR(255) | NOT NULL | Full customer name |
-| email | VARCHAR(255) | UNIQUE | Customer email address |
-| phone | VARCHAR(20) | - | Customer phone number |
-| country | VARCHAR(100) | - | Customer country |
-| state | VARCHAR(100) | - | Customer state/province |
-| city | VARCHAR(100) | - | Customer city |
-| postal_code | VARCHAR(20) | - | Customer postal/zip code |
-| address | TEXT | - | Full street address |
-| customer_segment | VARCHAR(50) | - | Segment (Premium/Standard/Budget) |
-| signup_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Account creation date |
-| last_purchase_date | DATE | - | Date of most recent purchase |
-| lifetime_value | DECIMAL(12,2) | DEFAULT 0 | Total customer spend |
-| total_orders | INT | DEFAULT 0 | Count of customer orders |
-| is_active | BOOLEAN | DEFAULT TRUE | Active/inactive status |
-| updated_date | TIMESTAMP | AUTO UPDATE | Last update timestamp |
-
-**Indexes**: email, customer_segment, signup_date
-
----
-
-## 4. ORDERS Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| order_id | INT | PK, AUTO_INCREMENT | Unique order identifier |
-| customer_id | INT | FK NOT NULL | Reference to customer |
-| order_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Date order was placed |
-| ship_date | DATE | - | Date order shipped |
-| delivery_date | DATE | - | Date order delivered |
-| total_amount | DECIMAL(12,2) | NOT NULL | Total order amount (final) |
-| order_subtotal | DECIMAL(12,2) | - | Subtotal before tax/discount |
-| discount_amount | DECIMAL(10,2) | DEFAULT 0 | Total discount applied |
-| tax_amount | DECIMAL(10,2) | DEFAULT 0 | Tax charged |
-| shipping_cost | DECIMAL(10,2) | DEFAULT 0 | Shipping fee |
-| order_status | VARCHAR(50) | - | Status (Completed/Pending/Cancelled/Returned) |
-| payment_method | VARCHAR(50) | - | Payment type (Credit Card/PayPal/etc) |
-| shipping_method | VARCHAR(100) | - | Shipping carrier/method |
-| shipping_address | TEXT | - | Delivery address |
-| notes | TEXT | - | Internal order notes |
-| created_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Record creation date |
-
-**Indexes**: customer_id, order_date, order_status, delivery_date, (customer_id + order_date)
-
----
-
-## 5. ORDER ITEMS Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| order_item_id | INT | PK, AUTO_INCREMENT | Unique order line item ID |
-| order_id | INT | FK NOT NULL | Reference to order |
-| product_id | INT | FK NOT NULL | Reference to product |
-| quantity | INT | NOT NULL DEFAULT 1 | Quantity ordered |
-| unit_price | DECIMAL(10,2) | NOT NULL | Price per unit at time of sale |
-| discount_percent | DECIMAL(5,2) | DEFAULT 0 | Line item discount % |
-| line_total | DECIMAL(12,2) | - | quantity × unit_price - discount |
-| created_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Record creation date |
-
-**Indexes**: order_id, product_id, (order_id + product_id)
-
----
-
-## 6. RETURNS Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| return_id | INT | PK, AUTO_INCREMENT | Unique return identifier |
-| order_id | INT | FK NOT NULL | Reference to original order |
-| order_item_id | INT | FK | Reference to specific line item |
-| return_date | DATE | NOT NULL | Date item was returned |
-| reason | VARCHAR(255) | - | Return reason (Defective/Wrong/etc) |
-| refund_amount | DECIMAL(12,2) | - | Amount refunded to customer |
-| return_status | VARCHAR(50) | - | Status (Accepted/Rejected/Processing) |
-| restocking_fee | DECIMAL(10,2) | DEFAULT 0 | Restocking fee charged |
-| notes | TEXT | - | Additional return notes |
-| created_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Record creation date |
-| updated_date | TIMESTAMP | AUTO UPDATE | Last update timestamp |
-
-**Indexes**: order_id, return_date, return_status
-
----
-
-## 7. PAYMENT TRANSACTIONS Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| transaction_id | INT | PK, AUTO_INCREMENT | Unique transaction identifier |
-| order_id | INT | FK NOT NULL | Reference to order |
-| payment_method | VARCHAR(50) | - | Payment type |
-| amount | DECIMAL(12,2) | - | Transaction amount |
-| transaction_status | VARCHAR(50) | - | Status (Completed/Failed/Pending) |
-| transaction_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Payment date/time |
-| reference_number | VARCHAR(100) | - | Payment gateway reference |
-
-**Indexes**: order_id, transaction_date
-
----
-
-## 8. INVENTORY LOG Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| log_id | INT | PK, AUTO_INCREMENT | Unique log entry ID |
-| product_id | INT | FK NOT NULL | Reference to product |
-| transaction_type | VARCHAR(50) | - | Type (Purchase/Sale/Adjustment/Return) |
-| quantity_change | INT | - | Quantity added/removed |
-| previous_quantity | INT | - | Stock level before change |
-| new_quantity | INT | - | Stock level after change |
-| notes | TEXT | - | Transaction notes |
-| created_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Transaction date |
-
-**Indexes**: product_id, created_date
-
----
-
-## 9. CUSTOMER REVIEWS Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| review_id | INT | PK, AUTO_INCREMENT | Unique review identifier |
-| product_id | INT | FK NOT NULL | Reference to product |
-| customer_id | INT | FK NOT NULL | Reference to customer |
-| order_id | INT | FK | Reference to order |
-| rating | INT | CHECK (1-5) | Rating score (1-5 stars) |
-| review_text | TEXT | - | Written review content |
-| review_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Review submission date |
-| helpful_count | INT | DEFAULT 0 | Count of "helpful" votes |
-
-**Indexes**: product_id, rating, review_date
-
----
-
-## 10. MARKETING CAMPAIGNS Table
-
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| campaign_id | INT | PK, AUTO_INCREMENT | Unique campaign identifier |
-| campaign_name | VARCHAR(255) | - | Marketing campaign name |
-| campaign_type | VARCHAR(100) | - | Type (Email/Discount/Social/etc) |
-| start_date | DATE | - | Campaign start date |
-| end_date | DATE | - | Campaign end date |
-| budget | DECIMAL(12,2) | - | Campaign budget amount |
-| discount_percent | DECIMAL(5,2) | - | Discount offered (if applicable) |
-| target_segment | VARCHAR(100) | - | Target customer segment |
-| created_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Record creation date |
-
-**Indexes**: campaign_type, (start_date + end_date)
-
----
-
-## Analytics Views
-
-### customer_summary
-Aggregated customer metrics including order count, lifetime value, purchase frequency.
-
-### product_performance
-Product-level KPIs: revenue, profit, margin, ratings, inventory.
-
-### daily_sales
-Daily aggregated sales metrics: orders, revenue, discounts, taxes, shipping, AOV.
-
-### return_analysis
-Daily return metrics: count, refunds, return rate by reason.
-
-### geographic_sales
-Sales by country/state: customer count, orders, revenue, AOV.
-
----
-
-## Data Quality Standards
-
-- **Date Consistency**: All dates in YYYY-MM-DD format, timestamps in UTC
-- **Pricing**: All amounts in decimal(X,2) format (2 decimal places)
-- **Foreign Keys**: All relationships enforced with FK constraints
-- **Status Fields**: Standardized values (Completed, Pending, Cancelled, Returned, etc)
-- **Naming**: Snake_case for columns, consistent terminology across tables
-
----
-
-## Common Calculations
-
-### Order Value Calculations
-```
-total_amount = order_subtotal - discount_amount + tax_amount + shipping_cost
-line_total = (unit_price × quantity) - (unit_price × quantity × discount_percent / 100)
-```
-
-### Profit Calculations
-```
-profit = revenue - cost
-profit_margin = (revenue - cost) / revenue × 100
-gross_margin = (price - cost) / price × 100
-```
-
-### Customer Metrics
-```
-lifetime_value = SUM(total_amount) for all customer orders
-avg_order_value = SUM(total_amount) / COUNT(orders)
-return_rate = COUNT(returns) / COUNT(orders) × 100
-```
-
----
-
-## Related Documents
-- `schema.sql` - Database creation script
-- `sample_data.sql` - Sample dataset
-- See SQL queries folder for analysis examples
+## marketing_campaigns
+| Column | Type | Description |
+|---|---|---|
+| campaign_id | INT | Unique campaign ID |
+| campaign_name | VARCHAR(255) | Campaign name |
+| campaign_type | VARCHAR(100) | Email, discount, social, etc. |
+| start_date | DATE | Campaign start |
+| end_date | DATE | Campaign end |
+| budget | DECIMAL(12,2) | Budget |
+| discount_percent | DECIMAL(5,2) | Discount percentage |
+| target_segment | VARCHAR(100) | Audience target |
+| created_date | TIMESTAMP | Creation date |
