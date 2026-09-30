@@ -17,13 +17,13 @@
 - Stacked bar: Category revenue by month
 - Scatter plot: Order value vs customer segment
 - KPI: YoY revenue growth
-- Filters: Date, region, category
+- Filters: date, region, category
 
 ## Page 3: Product Performance
-- Horizontal bar chart: Top products by revenue
+- Horizontal bar chart: Revenue by product
 - Heatmap: Category vs margin
 - Column chart: Units sold by product
-- Inventory table: Stock levels
+- Table: Stock levels and reorder thresholds
 - Product rating trend
 
 ## Page 4: Customer Analytics
@@ -42,12 +42,5 @@
 
 ## Suggested design
 - Theme: Blue/teal with green profit accents
-- Primary focus: revenue, retention, and fulfillment
-- Use filters for date range, region, category, customer segment
-- Keep top KPIs visible on every page
-
-## Recommended dashboard stories
-1. Revenue is growing, but some categories underperform.
-2. Premium customers contribute more than standard customers.
-3. Returns are concentrated in a few product categories.
-4. Fulfillment time is slower in key regions.
+- Keep high-level KPIs visible on every page
+- Use slicers for date, region, category, customer segment, shipping method

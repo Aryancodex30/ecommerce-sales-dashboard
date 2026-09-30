@@ -1,16 +1,17 @@
 # E-Commerce Sales Dashboard
 
-An end-to-end data analytics project covering e-commerce sales, customer behavior, and performance trends using SQL, Python, and dashboarding tools.
+An end-to-end data analytics mini-project for a portfolio, combining SQL, Python, and dashboard design around an online retail business.
 
-## Project overview
-This project is designed to help you build a portfolio-ready analytical dashboard based on an online retail dataset. It includes:
-- a relational schema for e-commerce data
-- SQL for business analysis
-- Python data preparation and analysis
-- a dashboard wireframe for Power BI or Tableau
-- clear business metrics and recommendations
+## Why this project matters
+This project demonstrates practical data analysis skills that employers look for:
+- working with structured data and relational schemas
+- cleaning and validating business data
+- deriving KPI metrics from transactional data
+- segmenting customers and analyzing behavior
+- creating executive dashboard visuals
+- turning analysis into business recommendations
 
-## Folder structure
+## Project structure
 
 ```text
 ecommerce-sales-dashboard/
@@ -23,84 +24,114 @@ ecommerce-sales-dashboard/
 ├── sql_queries/
 │   ├── 01_revenue_analysis.sql
 │   ├── 02_product_analysis.sql
-│   └── 03_customer_analysis.sql
-├── dashboards/
-│   └── dashboard_wireframe.md
+│   ├── 03_customer_analysis.sql
+│   ├── 04_order_analysis.sql
+│   └── 05_geographic_analysis.sql
 ├── python_analysis/
-│   └── requirements.txt
-└── docs/
-    └── project_notes.md
+│   ├── requirements.txt
+│   ├── generate_realistic_data.py
+│   ├── 01_data_loading.py
+│   ├── 02_data_cleaning.py
+│   ├── 03_exploratory_analysis.py
+│   ├── 04_customer_segmentation.py
+│   ├── 05_forecasting.py
+│   └── 06_export_dashboard_data.py
+├── dashboards/
+│   ├── dashboard_wireframe.md
+│   └── powerbi_dashboard_spec.md
+├── docs/
+│   ├── portfolio_summary.md
+│   └── project_notes.md
+└── data/
+    └── generated/
 ```
 
-## Business questions this project answers
-- Which products generate the most revenue?
-- Which customer segments are most valuable?
-- How is revenue trending over time?
-- Which regions perform best?
-- Which orders are at risk or problematic?
-- What are the main return and fulfillment issues?
+## Business questions answered
+- Which products and categories produce the most revenue?
+- Which geographies contribute the highest sales?
+- Which customer segments are the highest value?
+- What are the biggest causes of cancelation and returns?
+- How is revenue trending over months and seasons?
+- What actions should be recommended to improve conversion and retention?
 
-## Dataset schema
-The schema includes these core tables:
-- suppliers
-- products
-- customers
-- orders
-- order_items
-- returns
-- payment_transactions
-- inventory_log
-- customer_reviews
-- marketing_campaigns
-
-See `database/schema.sql` for the exact implementation.
-
-## Key KPIs
+## Core KPIs
 - Total Revenue
 - Total Orders
 - Average Order Value (AOV)
 - Revenue Growth Rate
+- Profit Margin
+- Customer Retention Rate
 - Return Rate
-- Gross Profit Margin
-- Top Products by Revenue
 - New vs Returning Customers
-- Geographic Sales by Country/State
 
-## SQL analysis highlights
-This project includes SQL analysis for:
-- revenue and monthly growth
-- product contribution analysis
-- customer segmentation (RFM style)
-- geographic sales performance
-- return analysis and refund review
+## Tools used
+- SQL for querying and validation
+- Python with pandas and scikit-learn for analysis
+- Matplotlib and seaborn for charts
+- Power BI / Tableau for dashboard visual storytelling
 
-## Dashboard layout
-The project includes a dashboard wireframe in `dashboards/dashboard_wireframe.md` with pages such as:
-- Executive Overview
-- Revenue Analysis
-- Product Performance
-- Customer Analytics
-- Order & Fulfillment
+## Setup
 
-## Recommended tools
-- SQL: PostgreSQL / MySQL / SQL Server
-- Python: pandas, numpy, matplotlib, seaborn, scikit-learn
-- Visualization: Power BI or Tableau
+### Database setup
+```bash
+mysql -u root -p < database/schema.sql
+mysql -u root -p < database/sample_data.sql
+```
 
-## Getting started
-1. Run the schema in your database:
-   `mysql -u root -p < database/schema.sql`
-2. Load sample data:
-   `mysql -u root -p < database/sample_data.sql`
-3. Run SQL queries in `sql_queries/`
-4. Open the dashboard wireframe and build the report in Power BI or Tableau
+### Python environment
+```bash
+cd python_analysis
+pip install -r requirements.txt
+```
 
-## Project outcomes
-By the end of this project, you will have:
-- a clean data model for e-commerce analytics
-- SQL queries that reveal business performance
-- an understandable business dashboard
-- a portfolio-ready project that shows analytical thinking
+### Generate realistic test data
+```bash
+python python_analysis/generate_realistic_data.py
+```
 
-## Notes
-This project is intentionally designed for portfolio use and can be extended with forecasting, customer churn modeling, and ad hoc marketing analysis.
+### Run analysis scripts
+```bash
+python python_analysis/01_data_loading.py
+python python_analysis/02_data_cleaning.py
+python python_analysis/03_exploratory_analysis.py
+python python_analysis/04_customer_segmentation.py
+python python_analysis/05_forecasting.py
+python python_analysis/06_export_dashboard_data.py
+```
+
+## SQL analytics coverage
+The SQL folder contains analysis for:
+- revenue trends
+- product contribution
+- customer segmentation
+- order behavior and fulfillment
+- geographic performance
+
+## Dashboard roadmap
+The dashboard wireframe includes:
+- Executive overview page
+- Revenue analysis page
+- Product performance page
+- Customer insights page
+- Fulfillment and returns page
+
+## Portfolio-ready story
+This project can be positioned as:
+- "E-commerce Sales Analytics Dashboard"
+- "Retail Performance and Customer Insights"
+- "Sales KPI Dashboard with SQL and Python"
+
+## Recommended project narrative for GitHub
+Use a simple narrative in your portfolio:
+- Built a sales analytics dashboard using transactional retail data
+- Cleansed and modeled data in SQL and Python
+- Identified top revenue drivers and customer segments
+- Created KPI dashboards to support business decisions
+- Produced actionable recommendations for product and retention strategies
+
+## Next steps
+The project can be extended with:
+- customer churn modeling
+- product recommendation logic
+- forecasting and time-series prediction
+- A/B test or campaign performance analysis

@@ -1,3 +1,5 @@
+# SQL: Revenue analysis
+
 WITH monthly_sales AS (
     SELECT
         DATE_FORMAT(order_date, '%Y-%m') AS month,

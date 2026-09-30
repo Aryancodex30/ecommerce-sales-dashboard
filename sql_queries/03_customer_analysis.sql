@@ -1,3 +1,5 @@
+# SQL: Customer analysis
+
 WITH customer_order_summary AS (
     SELECT
         c.customer_id,
